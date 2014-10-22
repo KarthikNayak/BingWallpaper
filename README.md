@@ -9,10 +9,12 @@ to set it as the Desktop Wallpaper.
 * Download the source.  
 * Change into source directory  
 * Run :   
-	```./configure  
-		make  
-		sudo make install```
+```
+./configure  
+make  
+sudo make install
+```
 * Now you can change wallpaper to the current bing wallpaper by just running   
-the ```bingit``` command on the terminal.
+the _bingit_ command on the terminal.  
 
-__Play around with cron and crontab to make it change wallpaper automatically every morning :D__ 
+__Play around with cron and crontab to make it change wallpaper automatically every morning :D__
