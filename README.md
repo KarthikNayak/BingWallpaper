@@ -22,3 +22,8 @@ sudo make install
 the _bingit_ command on the terminal.  
 
 __Play around with cron and crontab to make it change wallpaper automatically every morning :D__
+
+###Crontab Help
+
+* install crontab (cronie maybe)
+* Add `5 0 * * * /usr/local/bin/bingit` to crontab using `crontab -e`
