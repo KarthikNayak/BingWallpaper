@@ -44,18 +44,18 @@ char *get_body(char *url, char *bodyfilename)
 		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
 
 		bodyfile = fopen(bodyfilename, WRITEBIN);
-		if (bodyfile == NULL)  
+		if (bodyfile == NULL)
 			goto error2;
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, bodyfile);
-		
+
 		res = curl_easy_perform(curl);
-		
+
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n",
 				curl_easy_strerror(res));
 			goto error1;
 		}
-		
+
 		curl_easy_cleanup(curl);
 		fclose(bodyfile);
 	}
@@ -74,13 +74,13 @@ char *get_url(char *bodyfilename)
 	unsigned long int file_size;
 	FILE *bodyfile;
 	cJSON *json;
-	
+
 	bodyfile = fopen(bodyfilename, READONLY);
 	if(!bodyfile){
 		fprintf(stderr, "Failed to open File\n");
 		return NULL;
 	}
-	
+
 	fseek(bodyfile, 0L, SEEK_END);
 	file_size = ftell(bodyfile);
 	rewind(bodyfile);
@@ -90,33 +90,33 @@ char *get_url(char *bodyfilename)
 		fprintf(stderr, "Could not allocate memory\n");
 		goto error1;
 	}
-	
+
 	if(file_size != fread(buffer, 1, file_size, bodyfile)){
 		fprintf(stderr, "Could not copy to buffer\n");
 		goto error;
 	}
 	fclose(bodyfile);
-	
+
 	json = cJSON_Parse(buffer);
 	if(!json){
 		fprintf(stderr, "cJSON error in %s", cJSON_GetErrorPtr());
 		goto error1;
 	}
 	free(buffer);
-	
+
 	json = json->child->child;
 	json = cJSON_GetObjectItem(json, "url");
-	
+
 	out = cJSON_Print(json);
 	cJSON_Delete(json);
-	
+
 	base = calloc(1, strlen(out) + 100);
 	if(!base)
 		return NULL;
 	strcat(base, "http://www.bing.com");
 	strcat(base, out+1);
 	base[strlen(base) - 1] = '\0';
-	
+
 	return base;
 
 error:
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Could not download image\n");
 		return -1;
 	}
-	
+
 	if(!getcwd(cwd, sizeof(cwd))){
 		fprintf(stderr, "Could not get pwd\n");
 		return -1;
@@ -163,6 +163,6 @@ int main(int argc, char *argv[])
 	system(cmd);
 	sprintf(cmd, "gsettings set org.gnome.desktop.background picture-uri ~/.bingit/image.jpg");
 	system(cmd);
-		
+
 	return 0;
 }
