@@ -4,6 +4,10 @@ BingWallpaper
 A Simple C App To download the "Wallpaper of the day" on www.bing.com and
 to set it as the Desktop Wallpaper.
 
+##Requirements
+
+* feh
+
 ##Instructions
 
 * Download the source.  

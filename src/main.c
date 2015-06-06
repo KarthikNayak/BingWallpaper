@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
 	system("mkdir -p ~/.bingit");
 	sprintf(cmd, "mv %s/image.jpg ~/.bingit/image.jpg", cwd);
 	system(cmd);
-	sprintf(cmd, "gsettings set org.gnome.desktop.background picture-uri ~/.bingit/image.jpg");
+	sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
 	system(cmd);
 
 	return 0;
