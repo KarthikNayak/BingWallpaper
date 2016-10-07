@@ -168,11 +168,11 @@ int main(int argc, char *argv[])
         char *homedir = getenv("HOME");
         char full[1024] = "";
         strcat(strcat(strcat(full, "gsettings set org.gnome.desktop.background picture-uri file://"), homedir), "./bingit/image.jpg");
-        sprintf(cmd, full);
+        sprintf(cmd, "", full);
         system(cmd);
     } else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
         //this must be run from the user's context
-        sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set ~/.bingit/image.jpg");
+        sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
         system(cmd);
     } else {
         sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
