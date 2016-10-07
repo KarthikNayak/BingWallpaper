@@ -5,12 +5,13 @@ AC_PREREQ([2.69])
 AC_INIT([Bing-Wallpaper], [1.0], [karthik.188@gmail.com])
 AM_INIT_AUTOMAKE
 AC_OUTPUT(Makefile src/Makefile)
-#AC_CONFIG_SRCDIR([src/main.c])
 
 # Checks for programs.
 AC_PROG_CC
 
 # Checks for libraries.
+AC_CHECK_LIB([curl], [curl_global_init])
+AC_CHECK_LIB([m], [sqrt])
 
 # Checks for header files.
 AC_CHECK_HEADERS([float.h limits.h stdlib.h string.h unistd.h])
