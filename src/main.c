@@ -133,6 +133,8 @@ int main(int argc, char *argv[])
  	char *url1 = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&nc=1397809837851&pid=hp";
 	char *file1 = "body.out";
 	char cwd[1024], cmd[1024];
+    const char *de_env_variable = "XDG_CURRENT_DESKTOP"; //displays bad values on most wm's and weird de setups
+    char *xdg_desktop_env = getenv(de_env_variable);
 
 	bodyfilename = get_body(url1, file1);
 	if(!bodyfilename){
@@ -161,8 +163,24 @@ int main(int argc, char *argv[])
 	system("mkdir -p ~/.bingit");
 	sprintf(cmd, "mv %s/image.jpg ~/.bingit/image.jpg", cwd);
 	system(cmd);
-	sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
-	system(cmd);
+    if(strcmp(xdg_desktop_env, "Unity") == 0 || strcmp(xdg_desktop_env, "GNOME") == 0) {
+        //will fail on older gnome versions
+        char *homedir = getenv("HOME");
+        char full[1024] = "";
+        strcat(strcat(strcat(full, "gsettings set org.gnome.desktop.background picture-uri file://"), homedir), "./bingit/image.jpg");
+        sprintf(cmd, full);
+        system(cmd);
+    } else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
+        //this must be run from the user's context
+        sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set ~/.bingit/image.jpg");
+        system(cmd);
+    } else {
+        sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
+        system(cmd);
+    }
+    //not present here is KDE because it requires the DBUS kabuki dance
+    //LXDE doesn't even support changing the wallpaper
+    //
 
 	return 0;
 }
