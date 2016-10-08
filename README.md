@@ -5,12 +5,14 @@ A Simple C App To download the "Wallpaper of the day" on www.bing.com and
 to set it as the Desktop Wallpaper.
 
 ##Requirements
-* curl
+* libcurl
+* autoconf
 
 BingWallpaper supports several desktop environments:
 - GNOME 3+
 - Unity 7+
 - XFCE 4+
+- MATE 1.2+
 - Any window manager that supports `feh`
 
 ##Instructions
