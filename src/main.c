@@ -174,6 +174,13 @@ int main(int argc, char *argv[])
         //this must be run from the user's context
         sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
         system(cmd);
+    } else if(strcmp(xdg_desktop_env, "MATE") == 0) {
+        //will fail on older mate versions, but not for the same reason
+        char *homedir = getenv("HOME");
+        char full[1024] = "";
+        strcat(strcat(strcat(full, "gsettings set org.mate.background picture-filename '"), homedir), "/.bingit/image.jpg'");
+        sprintf(cmd, "%s", full);
+        system(cmd);
     } else {
         sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
         system(cmd);
