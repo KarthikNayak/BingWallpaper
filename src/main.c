@@ -167,8 +167,8 @@ int main(int argc, char *argv[])
         //will fail on older gnome versions
         char *homedir = getenv("HOME");
         char full[1024] = "";
-        strcat(strcat(strcat(full, "gsettings set org.gnome.desktop.background picture-uri file://"), homedir), "./bingit/image.jpg");
-        sprintf(cmd, "", full);
+        strcat(strcat(strcat(full, "gsettings set org.gnome.desktop.background picture-uri file://"), homedir), "/.bingit/image.jpg");
+        sprintf(cmd, "%s", full);
         system(cmd);
     } else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
         //this must be run from the user's context
