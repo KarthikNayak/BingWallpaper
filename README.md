@@ -5,8 +5,8 @@ A Simple C App To download the "Wallpaper of the day" on www.bing.com and
 to set it as the Desktop Wallpaper.
 
 ##Requirements
-* libcurl
-* autoconf
+* `feh`
+* A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
 
 BingWallpaper supports several desktop environments:
 - GNOME 3+
@@ -21,8 +21,7 @@ BingWallpaper supports several desktop environments:
 * Change into source directory  
 * Run :   
 ```
-./configure  
-make  
+make
 sudo make install
 ```
 * Now you can change wallpaper to the current bing wallpaper by just running   
