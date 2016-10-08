@@ -6,7 +6,8 @@ to set it as the Desktop Wallpaper.
 
 ##Requirements
 
-* feh
+* `feh`
+* A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
 
 ##Instructions
 
@@ -14,8 +15,7 @@ to set it as the Desktop Wallpaper.
 * Change into source directory  
 * Run :   
 ```
-./configure  
-make  
+make
 sudo make install
 ```
 * Now you can change wallpaper to the current bing wallpaper by just running   
@@ -26,4 +26,4 @@ __Play around with cron and crontab to make it change wallpaper automatically ev
 ###Crontab Help
 
 * install crontab (cronie maybe)
-* Add `5 0 * * * /usr/local/bin/bingit` to crontab using `crontab -e`
+* Add `5 0 * * * /usr/bin/bingit` to crontab using `crontab -e`
