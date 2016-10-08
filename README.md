@@ -32,4 +32,4 @@ __Play around with cron and crontab to make it change wallpaper automatically ev
 ###Crontab Help
 
 * install crontab (cronie maybe)
-* Add `5 0 * * * /usr/local/bin/bingit` to crontab using `crontab -e`
+* Add `5 0 * * * /usr/bin/bingit` to crontab using `crontab -e`
