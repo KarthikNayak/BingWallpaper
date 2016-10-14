@@ -170,31 +170,26 @@ int main(int argc, char *argv[])
 	system("mkdir -p ~/.bingit");
 	sprintf(cmd, "mv %s/image.jpg ~/.bingit/image.jpg", cwd);
 	system(cmd);
-    if(strcmp(xdg_desktop_env, "Unity") == 0 || strcmp(xdg_desktop_env, "GNOME") == 0) {
-        //will fail on older gnome versions
-        char *homedir = getenv("HOME");
-        char full[1024] = "";
-        strcat(strcat(strcat(full, "gsettings set org.gnome.desktop.background picture-uri file://"), homedir), "/.bingit/image.jpg");
-        sprintf(cmd, "%s", full);
-        system(cmd);
-    } else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
-        //this must be run from the user's context
-        sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
-        system(cmd);
-    } else if(strcmp(xdg_desktop_env, "MATE") == 0) {
-        //will fail on older mate versions, but not for the same reason
-        char *homedir = getenv("HOME");
-        char full[1024] = "";
-        strcat(strcat(strcat(full, "gsettings set org.mate.background picture-filename '"), homedir), "/.bingit/image.jpg'");
-        sprintf(cmd, "%s", full);
-        system(cmd);
-    } else {
-        sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
-        system(cmd);
-    }
-    //not present here is KDE because it requires the DBUS kabuki dance
-    //LXDE doesn't even support changing the wallpaper
-    //
+
+	if (strcmp(xdg_desktop_env, "Unity") == 0 || strcmp(xdg_desktop_env, "GNOME") == 0) {
+		sprintf(cmd, "gsettings set org.gnome.desktop.background picture-uri file://~/.bingit/image.jpg");
+		system(cmd);
+	} else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
+		/* This must be run from the user's context */
+		sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
+		system(cmd);
+	} else if(strcmp(xdg_desktop_env, "MATE") == 0) {
+		/* Will fail on older mate versions, but not for the same reason */
+		sprintf(cmd, "gsettings set org.mate.background picture-filename file://~/.bingit/image.jpg");
+		system(cmd);
+	} else {
+		sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
+		system(cmd);
+	}
+
+	/*
+	 * KDE and LXDE not yet supported
+	 */
 
 	return 0;
 }
