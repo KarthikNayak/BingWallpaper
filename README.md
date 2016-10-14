@@ -7,10 +7,6 @@ to set it as the Desktop Wallpaper.
 ##Requirements
 * `feh`
 * A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
-
-<<<<<<< HEAD
-* `feh`
-* A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
 =======
 BingWallpaper supports several desktop environments:
 - GNOME 3+
@@ -18,7 +14,6 @@ BingWallpaper supports several desktop environments:
 - XFCE 4+
 - MATE 1.2+
 - Any window manager that supports `feh`
->>>>>>> a0c91e733cf11be7effb9221488fca58ad7c7af8
 
 ##Instructions
 
