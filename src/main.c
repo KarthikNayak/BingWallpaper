@@ -136,6 +136,13 @@ int main(int argc, char *argv[])
 	const char *de_env_variable = "XDG_CURRENT_DESKTOP";
 	char *xdg_desktop_env = getenv(de_env_variable);
 
+	/*
+	 * Sometimes the xdg_desktop_env is not set, ensure this doesn't break the code
+	 */
+	if (xdg_desktop_env == 0) {
+			xdg_desktop_env = "";
+	}
+
 	bodyfilename = get_body(url1, file1);
 	if (!bodyfilename) {
 		fprintf(stderr, "Could not obtain URL body\n");
