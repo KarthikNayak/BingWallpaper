@@ -1,4 +1,4 @@
-CC = cc
+CC = gcc
 CFLAGS = -O2 -Wall
 LDFLAGS = -lcurl -lm
 
@@ -7,7 +7,7 @@ PREFIX = /usr
 all: bingit
 
 bingit: src/*.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o bingit src/*.c
+	$(CC) $(CFLAGS) -o bingit src/*.c $(LDFLAGS)
 
 install: all
 	@echo installing executables to ${PREFIX}/bin
