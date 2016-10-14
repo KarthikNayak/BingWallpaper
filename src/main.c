@@ -33,11 +33,6 @@
 #define WRITEBIN "wb"
 #define READONLY "r"
 
-void usage(name)
-{
-	printf("usage: %s [-v]", name);
-}
-
 char *get_body(char *url, char *bodyfilename)
 {
 	CURL *curl;
@@ -69,7 +64,7 @@ char *get_body(char *url, char *bodyfilename)
 error1:
 	fclose(bodyfile);
 error2:
-        curl_easy_cleanup(curl);
+	curl_easy_cleanup(curl);
 	return NULL;
 }
 
@@ -132,6 +127,11 @@ error1:
 	return NULL;
 }
 
+void usage(char * name)
+{
+	printf("usage: %s [-v]\n", name);
+}
+
 int main(int argc, char *argv[])
 {
 	char *url = NULL;
@@ -141,14 +141,28 @@ int main(int argc, char *argv[])
 	char cwd[1024], cmd[1024];
 	const char *de_env_variable = "XDG_CURRENT_DESKTOP";
 	char *xdg_desktop_env = getenv(de_env_variable);
+	int verbose = 0;
+
+	if (argc > 2) {
+		usage(argv[0]);
+		return -1;
+	}
+	if (argc == 2) {
+		if (strcmp("-v", argv[1]) == 0) verbose = 1;
+		else {
+			usage(argv[0]);
+			return -1;
+		}
+	}
 
 	/*
 	 * Sometimes the xdg_desktop_env is not set, ensure this doesn't break the code
 	 */
 	if (xdg_desktop_env == 0) {
-			xdg_desktop_env = "";
+		xdg_desktop_env = "";
 	}
 
+	if (verbose) printf("getting %s > %s\n", url1, file1);
 	bodyfilename = get_body(url1, file1);
 	if (!bodyfilename) {
 		fprintf(stderr, "Could not obtain URL body\n");
@@ -161,6 +175,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	if (verbose) printf("fetching image from %s\n", url); 
 	bodyfilename = get_body(url, "image.jpg");
 	if (!bodyfilename) {
 		fprintf(stderr, "Could not download image\n");
@@ -173,23 +188,29 @@ int main(int argc, char *argv[])
 	}
 
 	remove("body.out");
+	if (verbose) printf("mkdir -p ~/.bingit\n");
 	system("mkdir -p ~/.bingit");
 	sprintf(cmd, "mv %s/image.jpg ~/.bingit/image.jpg", cwd);
+	if (verbose) printf("%s\n", cmd);
 	system(cmd);
 
 	if (strcmp(xdg_desktop_env, "Unity") == 0 || strcmp(xdg_desktop_env, "GNOME") == 0) {
 		sprintf(cmd, "gsettings set org.gnome.desktop.background picture-uri file:///%s/.bingit/image.jpg", getpwuid(getuid())->pw_dir);
+		if (verbose) printf("%s\n", cmd);
 		system(cmd);
 	} else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
 		/* This must be run from the user's context */
 		sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
+		if (verbose) printf("%s\n", cmd);
 		system(cmd);
 	} else if(strcmp(xdg_desktop_env, "MATE") == 0) {
 		/* Will fail on older mate versions, but not for the same reason */
 		sprintf(cmd, "gsettings set org.mate.background picture-filename file:///%s/.bingit/image.jpg", getpwuid(getuid())->pw_dir);
+		if (verbose) printf("%s\n", cmd);
 		system(cmd);
 	} else {
 		sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
+		if (verbose) printf("%s\n", cmd);
 		system(cmd);
 	}
 
