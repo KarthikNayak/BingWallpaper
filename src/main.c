@@ -143,6 +143,8 @@ int main(int argc, char *argv[])
 			xdg_desktop_env = "";
 	}
 
+	printf("xdg_desktop_env: %s\n", xdg_desktop_env);
+
 	bodyfilename = get_body(url1, file1);
 	if (!bodyfilename) {
 		fprintf(stderr, "Could not obtain URL body\n");
@@ -173,17 +175,21 @@ int main(int argc, char *argv[])
 
 	if (strcmp(xdg_desktop_env, "Unity") == 0 || strcmp(xdg_desktop_env, "GNOME") == 0) {
 		sprintf(cmd, "gsettings set org.gnome.desktop.background picture-uri file://~/.bingit/image.jpg");
+		printf("CMD: %s\n", cmd);
 		system(cmd);
 	} else if(strcmp(xdg_desktop_env, "XFCE") == 0) {
 		/* This must be run from the user's context */
 		sprintf(cmd, "xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/last-image --set ~/.bingit/image.jpg");
+		printf("CMD: %s\n", cmd);
 		system(cmd);
 	} else if(strcmp(xdg_desktop_env, "MATE") == 0) {
 		/* Will fail on older mate versions, but not for the same reason */
 		sprintf(cmd, "gsettings set org.mate.background picture-filename file://~/.bingit/image.jpg");
+		printf("CMD: %s\n", cmd);
 		system(cmd);
 	} else {
 		sprintf(cmd, "feh --bg-scale ~/.bingit/image.jpg");
+		printf("CMD: %s\n", cmd);
 		system(cmd);
 	}
 
