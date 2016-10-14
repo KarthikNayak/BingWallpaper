@@ -32,6 +32,11 @@
 #define WRITEBIN "wb"
 #define READONLY "r"
 
+void usage(name)
+{
+	printf("usage: %s [-v]", name);
+}
+
 char *get_body(char *url, char *bodyfilename)
 {
 	CURL *curl;
