@@ -7,7 +7,7 @@ to set it as the Desktop Wallpaper.
 ##Requirements
 * `feh`
 * A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
-=======
+
 BingWallpaper supports several desktop environments:
 - GNOME 3+
 - Unity 7+
