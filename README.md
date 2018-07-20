@@ -4,7 +4,7 @@ BingWallpaper
 A Simple C App To download the "Wallpaper of the day" on www.bing.com and
 to set it as the Desktop Wallpaper.
 
-##Requirements
+## Requirements
 * `feh`
 * A `libcurl` development library: `libcurl4-gnutls-dev` or `libcurl4-openssl-dev` on Debian/Ubuntu.
 
@@ -15,7 +15,7 @@ BingWallpaper supports several desktop environments:
 - MATE 1.2+
 - Any window manager that supports `feh`
 
-##Instructions
+## Instructions
 
 * Download the source.  
 * Change into source directory  
@@ -29,7 +29,7 @@ the _bingit_ command on the terminal.
 
 __Play around with cron and crontab to make it change wallpaper automatically every morning :D__
 
-###Crontab Help
+### Crontab Help
 
 * install crontab (cronie maybe)
 * Add `5 0 * * * /usr/bin/bingit` to crontab using `crontab -e`
